@@ -10,6 +10,7 @@ describe('Login Functionality', () => {
   });
 
     it('should enter mobile number', async () => {
+      console.log('Entering mobile number');
     const phoneInput = await $('//android.widget.EditText[@text="Enter mobile number"]');
     await phoneInput.setValue('1234567890');
     await driver.pause(1000);
