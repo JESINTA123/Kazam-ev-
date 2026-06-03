@@ -53,7 +53,7 @@ it ('should click on Favorites', async() =>{
     await manageSection.waitForDisplayed({ timeout: 5000 });
 })
 
-it.only('should add Vehicles', async () => {
+it('should add Vehicles', async () => {
     await $('//android.widget.TextView[@text="Vehicles"]').click();
     await driver.pause(2000);
     await $('//android.view.ViewGroup[@content-desc=""]').click();

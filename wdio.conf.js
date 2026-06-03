@@ -28,12 +28,14 @@ exports.config = {
     // specs: [
         // './test/specs/**/*.js',
          specs: [
-                './test/specs/1.login.specs.js',
-                './test/specs/2.homepage.specs.js',
-                './test/specs/3.scan.specs.js',
-                './test/specs/4.wallet.specs.js',
-                './test/specs/5.tripplanner.specs.js',
-                './test/specs/6.profile.specs.js'
+                [
+        './test/specs/login.specs.js',
+        './test/specs/home.specs.js',
+        './test/specs/scan.specs.js',
+        './test/specs/wallet.specs.js',
+        './test/specs/tripplanner.specs.js',
+        './test/specs/profile.specs.js'
+  ]
 ],
 
     // ],
@@ -66,19 +68,19 @@ exports.config = {
   capabilities:  [{
         'appium:platformName':'Android',
         'appium:deviceName':'pixel_5',
-        'appium:platformVersion':'12.0',
+        'appium:platformVersion':'13.0',
         'appium:automationName':'UiAutomator2',
-        'appium:app': path.join(process.cwd(), './app/android/kazam.apk'), 
+        'appium:app': path.join(process.cwd(), './app/android/app-release (2).apk'), 
         'appium:autoGrantPermissions': true,
         'appium:noReset': true,
         'appium:fullReset': false, 
-        'appium:dontStopAppOnReset': true,   
-        'appium:newCommandTimeout': 300  
+        'appium:dontStopAppOnReset': true, 
+        'appium:newCommandTimeout': 300,
         
     }],
     //
     // ===================
-    // Test Configurations
+    // Test Configurations    
     // ===================
     // Define all options that are relevant for the WebdriverIO instance here
     //

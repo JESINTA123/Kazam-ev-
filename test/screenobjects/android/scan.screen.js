@@ -1,88 +1,79 @@
-class ScanScreen {
+class ScanQRScreen {
 
-  // Homepage Scan QR button
-  get scanQrBtn() {
-    return $('//android.widget.TextView[@text="Scan QR"]');
-  }
-
-  // Camera permission
-  get allowCameraBtn() {
-    return $('//android.widget.Button[@resource-id="com.android.permissioncontroller:id/permission_allow_foreground_only_button"]');
-  }
-
-  // Enter Charger ID
-  get enterChargerIdBtn() {
-    return $('//android.widget.TextView[@text="Enter Charger ID"]');
-  }
-
-  // Charger ID input
-  get chargerIdInput() {
-    return $('//android.widget.EditText[@resource-id="text-input-outlined"]');
-  }
-
-  // Continue button
-  get continueBtn() {
-    return $('//android.widget.TextView[@text="Continue"]');
-  }
-
-  // Full charge option
-  get fullChargeOption() {
-    return $('//android.widget.TextView[@text="Full Charge"]');
-  }
-
-  // Start / Stop charging button
-  get startStopChargingBtn() {
-    return $('//android.widget.TextView[@text="Stop"]');
-  }
-
-  async clickScanQr() {
-    await this.scanQrBtn.click();
-  }
-
-  async allowCameraPermissionIfVisible() {
-    try {
-      if (await this.allowCameraBtn.isDisplayed()) {
-        await this.allowCameraBtn.click();
-        console.log('Camera permission granted');
-        await driver.pause(2000);
-      }
-    } catch (err) {
-      console.log('Camera permission not shown');
+    get scanQrButton() {
+        return $('//android.widget.TextView[@text="Scan QR"]'); 
     }
-  }
 
-  async enterChargerId(deviceId) {
-    await this.enterChargerIdBtn.click();
-    await driver.pause(2000);
-    await this.chargerIdInput.setValue(deviceId);
-    await driver.hideKeyboard();
-  }
+    get allowCameraButton() {
+        return $('//android.widget.Button[@resource-id="com.android.permissioncontroller:id/permission_allow_foreground_only_button"]');
+    }
 
-  async clickContinue() {
-    await this.continueBtn.click();
-  }
+    get enterChargerIdText() {
+        return $('//android.widget.TextView[@text="Enter Charger ID"]');
+    }
 
-  async selectFullCharge() {
-    await this.fullChargeOption.click();
-  }
+    get deviceIdInput() {
+        return $('//android.widget.EditText[@resource-id="text-input-outlined"]');
+    }
 
-  async startCharging() {
-    await this.startStopChargingBtn.waitForDisplayed({ timeout: 10000 });
-    await this.startStopChargingBtn.click();
-  }
+    get continueButton() {
+        return $('//android.widget.TextView[@text="Continue"]');
+    }
 
-  async completeScanAndStartCharge(deviceId) {
-    await this.clickScanQr();
-    await driver.pause(10000);
-    await this.allowCameraPermissionIfVisible();
-    await this.enterChargerId(deviceId);
-    await driver.pause(1000);
-    await this.clickContinue();
-    await driver.pause(10000);
-    await this.selectFullCharge();
-    await driver.pause(30000);
-    await this.startCharging();
-  }
+    get fullChargeOption() {
+        return $('//android.widget.TextView[@text="Full Charge"]');
+    }
+
+    get stopButton() {
+        return $('//android.widget.TextView[@text="Stop"]');
+    }
+
+    async tapScanQR() {
+        await this.scanQrButton.click(); 
+        await driver.pause(10000);
+    }
+
+    async grantCameraPermissionIfPrompted() {
+        try {
+            const btn = this.allowCameraButton; 
+            if (await btn.isDisplayed()) {
+                await btn.click();
+                console.log('Camera permission granted');
+                await driver.pause(2000);
+            }
+        } catch (err) {
+            console.log('Camera permission not shown');
+        }
+    }
+
+    async enterDeviceId(deviceId) {
+        await this.enterChargerIdText.click(); 
+        await driver.pause(2000);
+
+        const input = this.deviceIdInput; 
+        await input.setValue(deviceId);
+        await driver.hideKeyboard();
+        await driver.pause(1000);
+    }
+
+    async tapContinue() {
+        await this.continueButton.click(); 
+        await driver.pause(10000);
+    }
+
+    async selectFullCharge() {
+        await this.fullChargeOption.click();
+        await driver.pause(30000);
+    }
+
+    async tapStopAndGoBack() {
+        const stop = this.stopButton; 
+        await stop.waitForDisplayed({ timeout: 10000 });
+        await stop.click();
+        await driver.pause(10000);
+        await driver.back();
+        await driver.pause(3000);
+    }
 }
 
-module.exports = new ScanScreen();
+module.exports = new ScanQRScreen();
